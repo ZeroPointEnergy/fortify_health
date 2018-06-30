@@ -29,6 +29,10 @@ Amber::Server.configure do
   end
 
   routes :web do
+    resources "/ingrediants", IngrediantController
+    resources "/products", ProductController
+    resources "/recipes", RecipeController
+    resources "/nutrition_facts", NutritionFactController
     get "/profile", UserController, :show
     get "/profile/edit", UserController, :edit
     patch "/profile", UserController, :update
