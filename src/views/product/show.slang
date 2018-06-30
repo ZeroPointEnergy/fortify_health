@@ -1,9 +1,11 @@
 h1 Show Product
 p = product.name
-p = product.user.id
 p = product.unit
 p = product.amount
-p = product.nutrition_fact.id
+p = nutrition_fact.calories
+p = nutrition_fact.fat
+p = nutrition_fact.carbohydrate
+p = nutrition_fact.protein
 p
   == link_to("back", "/products", class: "btn btn-light btn-sm")
   == link_to("edit", "/products/#{product.id}/edit", class: "btn btn-success btn-sm")
