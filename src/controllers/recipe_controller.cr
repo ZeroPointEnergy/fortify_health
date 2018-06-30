@@ -1,7 +1,13 @@
 class RecipeController < ApplicationController
+  before_action do
+    all { redirect_signed_out_user }
+  end
+
   def index
-    recipes = Recipe.all
-    render("index.slang")
+    if (user = current_user)
+      recipes = user.recipes
+      render("index.slang")
+    end
   end
 
   def show
@@ -19,14 +25,17 @@ class RecipeController < ApplicationController
   end
 
   def create
-    recipe = Recipe.new(recipe_params.validate!)
+    if (user = current_user)
+      recipe = Recipe.new(recipe_params.validate!)
+      recipe.user_id = user.id
 
-    if recipe.valid? && recipe.save
-      flash["success"] = "Created Recipe successfully."
-      redirect_to "/recipes"
-    else
-      flash["danger"] = "Could not create Recipe!"
-      render("new.slang")
+      if recipe.valid? && recipe.save
+        flash["success"] = "Created Recipe successfully."
+        redirect_to "/recipes/#{recipe.id}"
+      else
+        flash["danger"] = "Could not create Recipe!"
+        render("new.slang")
+      end
     end
   end
 
@@ -67,7 +76,6 @@ class RecipeController < ApplicationController
   def recipe_params
     params.validation do
       required(:name) { |f| !f.nil? }
-      required(:user_id) { |f| !f.nil? }
     end
   end
 end
