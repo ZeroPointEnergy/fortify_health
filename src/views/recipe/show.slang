@@ -8,7 +8,7 @@ p
   .col-sm-11
     h2 Ingrediants
   .col-sm-1
-    a.btn.btn-success.btn-sm href="/ingrediants/new" New
+    a.btn.btn-success.btn-sm href="/recipes/#{recipe.id}/ingrediants/new" New
 .table-responsive
   table.table.table-striped
     thead
@@ -29,6 +29,6 @@ p
           td = ingrediant.amount
           td
             span
-              == link_to("read", "/ingrediants/#{ingrediant.id}", class: "btn btn-primary btn-sm")
-              == link_to("edit", "/ingrediants/#{ingrediant.id}/edit", class: "btn btn-success btn-sm")
-              == link_to("delete", "/ingrediants/#{ ingrediant.id }?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")
+              == link_to("read", "/recipes/#{recipe.id}/ingrediants/#{ingrediant.id}", class: "btn btn-primary btn-sm")
+              == link_to("edit", "/recipes/#{recipe.id}/ingrediants/#{ingrediant.id}/edit", class: "btn btn-success btn-sm")
+              == link_to("delete", "/recipes/#{recipe.id}/ingrediants/#{ ingrediant.id }?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")
