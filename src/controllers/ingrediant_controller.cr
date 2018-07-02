@@ -12,17 +12,6 @@ class IngrediantController < ApplicationController
     end
   end
 
-  def show
-    with_recipe do |recipe|
-      if ingrediant = Ingrediant.find params["id"]
-        render("show.slang")
-      else
-        flash["warning"] = "Ingrediant with ID #{params["id"]} Not Found"
-        redirect_to "/recipes/#{recipe.id}"
-      end
-    end
-  end
-
   def new
     with_recipe do |recipe|
       ingrediant = Ingrediant.new

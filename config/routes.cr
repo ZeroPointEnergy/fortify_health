@@ -31,7 +31,7 @@ Amber::Server.configure do
   routes :web do
     resources "/products", ProductController
     resources "/recipes", RecipeController
-    resources "/recipes/:recipe_id/ingrediants", IngrediantController, except: [:index]
+    resources "/recipes/:recipe_id/ingrediants", IngrediantController, except: [:index, :show]
     get "/profile", UserController, :show
     get "/profile/edit", UserController, :edit
     patch "/profile", UserController, :update
