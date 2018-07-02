@@ -6,6 +6,8 @@ a class="nav-item #{active}" href="/" Home
   - active = context.request.path == "/profile" ? "active" : ""
   a class="nav-item nav-item-auth nav-item-auth-profile #{active}" href="/profile"
     == current_user.email
+  - active = context.request.path == "/meals" ? "active" : ""
+  a class="nav-item #{active}" href="/meals" Meals
   - active = context.request.path == "/recipes" ? "active" : ""
   a class="nav-item #{active}" href="/recipes" My Recipes
   - active = context.request.path == "/products" ? "active" : ""
@@ -17,9 +19,3 @@ a class="nav-item #{active}" href="/" Home
   - active = context.request.path == "/signin" ? "active" : ""
   a class="nav-item nav-item-auth nav-item-auth-signin #{active}" href="/signin"
     | Sign In
-- active = context.request.path == "/meals" ? "active" : ""
-a class="nav-item #{active}" href="/meals" Meals
-- active = context.request.path == "/dishes" ? "active" : ""
-a class="nav-item #{active}" href="/dishes" Dishes
-- active = context.request.path == "/side_dishes" ? "active" : ""
-a class="nav-item #{active}" href="/side_dishes" Side Dishes
