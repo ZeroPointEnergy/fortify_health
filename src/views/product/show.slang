@@ -1,11 +1,9 @@
-h1 Show Product
-p = product.name
-p = product.unit
-p = product.amount
-p = nutrition_fact.calories
-p = nutrition_fact.fat
-p = nutrition_fact.carbohydrate
-p = nutrition_fact.protein
+h1 = product.name
+p = "Nutrition facts for #{product.amount}#{product.unit}"
+p = "Calories: #{nutrition_fact.calories}"
+p = "Fat: #{nutrition_fact.fat}"
+p = "Carbohydrate: #{nutrition_fact.carbohydrate}"
+p = "Protein: #{nutrition_fact.protein}"
 p
   == link_to("back", "/products", class: "btn btn-light btn-sm")
   == link_to("edit", "/products/#{product.id}/edit", class: "btn btn-success btn-sm")

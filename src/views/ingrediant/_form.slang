@@ -13,4 +13,4 @@
   .form-group
     == text_field(name: "amount", value: ingrediant.amount, placeholder: "Amount", class: "form-control")
   == submit("Submit", class: "btn btn-primary btn-sm")
-  == link_to("back", "/ingrediants", class: "btn btn-light btn-sm")
+  == link_to("back", "/recipes/#{recipe.id}", class: "btn btn-light btn-sm")

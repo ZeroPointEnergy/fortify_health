@@ -13,22 +13,15 @@ p
   table.table.table-striped
     thead
       tr
-        th Recipe
         th Product
-        th User
-        th Unit
         th Amount
         th Actions
     tbody
       - recipe.ingrediants.each do |ingrediant|
         tr
-          td = ingrediant.recipe.id
-          td = ingrediant.product.id
-          td = ingrediant.user.id
-          td = ingrediant.unit
-          td = ingrediant.amount
+          td = ingrediant.product.name
+          td = "#{ingrediant.amount}#{ingrediant.unit}"
           td
             span
-              == link_to("read", "/recipes/#{recipe.id}/ingrediants/#{ingrediant.id}", class: "btn btn-primary btn-sm")
               == link_to("edit", "/recipes/#{recipe.id}/ingrediants/#{ingrediant.id}/edit", class: "btn btn-success btn-sm")
               == link_to("delete", "/recipes/#{recipe.id}/ingrediants/#{ ingrediant.id }?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")
