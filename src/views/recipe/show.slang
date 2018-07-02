@@ -4,6 +4,11 @@ p
   == link_to("rename", "/recipes/#{recipe.id}/edit", class: "btn btn-success btn-sm")
   == link_to("delete", "/recipes/#{recipe.id}?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")
 p
+h2 Nutrition Facts
+p = "Calories: #{recipe.nutrition_fact.calories}"
+p = "Fat: #{recipe.nutrition_fact.fat}"
+p = "Carbohydrate: #{recipe.nutrition_fact.carbohydrate}"
+p = "Protein: #{recipe.nutrition_fact.protein}"
 .row
   .col-sm-11
     h2 Ingrediants

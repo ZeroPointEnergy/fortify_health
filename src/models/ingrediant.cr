@@ -12,4 +12,8 @@ class Ingrediant < Granite::Base
   field unit : String
   field amount : Int32
   timestamps
+
+  def nutrition_fact
+    product.portion(amount || 0, unit || "")
+  end
 end

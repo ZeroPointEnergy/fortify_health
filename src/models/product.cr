@@ -11,4 +11,12 @@ class Product < Granite::Base
   field unit : String
   field amount : Int32
   timestamps
+
+  def portion(amount : Int32, unit : String)
+    if unit != self.unit
+      raise "Unit convertion is not supported yet"
+    else
+      nutrition_fact * (amount.to_f / (self.amount || 1).to_f)
+    end
+  end
 end

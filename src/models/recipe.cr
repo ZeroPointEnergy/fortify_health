@@ -8,4 +8,12 @@ class Recipe < Granite::Base
   # id : Int64 primary key is created for you
   field name : String
   timestamps
+
+  def nutrition_facts
+    ingrediants.map{|i| i.nutrition_fact}
+  end
+
+  def nutrition_fact
+    NutritionFact.sum(nutrition_facts)
+  end
 end
