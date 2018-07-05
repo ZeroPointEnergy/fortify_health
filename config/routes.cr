@@ -29,12 +29,12 @@ Amber::Server.configure do
   end
 
   routes :web do
-    resources "/side_dishes", SideDishController
-    resources "/dishes", DishController
-    resources "/meals", MealController
     resources "/products", ProductController
     resources "/recipes", RecipeController
     resources "/recipes/:recipe_id/ingrediants", IngrediantController, except: [:index, :show]
+    resources "/meals", MealController
+    resources "/meals/:meal_id/dishes", DishController, only: [:new, :create, :destroy]
+    resources "/meals/:meal_id/side_dishes", SideDishController, only: [:new, :create, :destroy]
     get "/profile", UserController, :show
     get "/profile/edit", UserController, :edit
     patch "/profile", UserController, :update

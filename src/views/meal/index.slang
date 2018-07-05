@@ -8,15 +8,13 @@
     thead
       tr
         th Time
-        th User
-        th Nutrition_fact
+        th Calories
         th Actions
     tbody
       - meals.each do |meal|
         tr
           td = meal.time
-          td = meal.user.id
-          td = meal.nutrition_fact.id
+          td = meal.nutrition_fact.calories
           td
             span
               == link_to("read", "/meals/#{meal.id}", class: "btn btn-primary btn-sm")

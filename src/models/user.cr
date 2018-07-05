@@ -12,6 +12,7 @@ class User < Granite::Base
 
   has_many :recipes
   has_many :products
+  has_many :meals
 
   validate :email, "is required", ->(user : User) do
     (email = user.email) ? !email.empty? : false

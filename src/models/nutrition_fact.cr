@@ -9,12 +9,12 @@ class NutritionFact < Granite::Base
   field protein : Int32
   timestamps
 
-  def self.sum(facts : Array(NutritionFact))
+  def self.sum(nutrition_facts : Array(NutritionFact))
     NutritionFact.new(
-      calories: facts.map{|f| f.calories || 0}.sum(0),
-      fat: facts.map{|f| f.fat || 0}.sum(0),
-      carbohydrate: facts.map{|f| f.carbohydrate || 0}.sum(0),
-      protein: facts.map{|f| f.protein || 0}.sum(0),
+      calories: nutrition_facts.map{|f| f.calories || 0}.sum(0),
+      fat: nutrition_facts.map{|f| f.fat || 0}.sum(0),
+      carbohydrate: nutrition_facts.map{|f| f.carbohydrate || 0}.sum(0),
+      protein: nutrition_facts.map{|f| f.protein || 0}.sum(0),
     )
   end
 
@@ -25,5 +25,14 @@ class NutritionFact < Granite::Base
       carbohydrate: ((carbohydrate || 0) * factor).to_i,
       protein: ((protein || 0) * factor).to_i,
     )
+  end
+
+  def sum(nutrition_facts : Array(NutritionFact))
+    fact = NutritionFact.sum(nutrition_facts)
+
+    self.calories = fact.calories
+    self.fat = fact.fat
+    self.carbohydrate = fact.carbohydrate
+    self.protein = fact.protein
   end
 end

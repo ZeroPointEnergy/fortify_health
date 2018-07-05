@@ -1,74 +1,68 @@
 class DishController < ApplicationController
-  def index
-    dishes = Dish.all
-    render("index.slang")
+  before_action do
+    all { redirect_signed_out_user }
   end
 
-  def show
-    if dish = Dish.find params["id"]
-      render("show.slang")
+  def with_meal
+    if meal = Meal.find(params["meal_id"])
+      yield(meal)
     else
-      flash["warning"] = "Dish with ID #{params["id"]} Not Found"
-      redirect_to "/dishes"
+      flash["warning"] = "Meal with ID #{params["meal_id"]} Not Found"
+      redirect_to "/meals"
     end
   end
 
   def new
-    dish = Dish.new
-    render("new.slang")
-  end
-
-  def create
-    dish = Dish.new(dish_params.validate!)
-
-    if dish.valid? && dish.save
-      flash["success"] = "Created Dish successfully."
-      redirect_to "/dishes"
-    else
-      flash["danger"] = "Could not create Dish!"
+    with_meal do |meal|
+      dish = Dish.new
       render("new.slang")
     end
   end
 
-  def edit
-    if dish = Dish.find params["id"]
-      render("edit.slang")
-    else
-      flash["warning"] = "Dish with ID #{params["id"]} Not Found"
-      redirect_to "/dishes"
-    end
-  end
+  def create
+    with_meal do |meal|
+      create_params = dish_params.validate!
+      dish = Dish.new(create_params)
+      dish.meal_id = meal.id
 
-  def update
-    if dish = Dish.find(params["id"])
-      dish.set_attributes(dish_params.validate!)
-      if dish.valid? && dish.save
-        flash["success"] = "Updated Dish successfully."
-        redirect_to "/dishes"
+      serving = (create_params["serving"] || 1.0).to_f
+      nutrition_fact = dish.recipe.nutrition_fact * serving
+
+      if nutrition_fact.valid? && nutrition_fact.save
+        dish.nutrition_fact_id = nutrition_fact.id
+
+        if dish.valid? && dish.save
+          flash["success"] = "Created Dish successfully."
+          meal.update_nutrition_facts
+          redirect_to "/meals/#{meal.id}"
+        else
+          flash["danger"] = "Could not create Dish!"
+          render("new.slang")
+        end
       else
-        flash["danger"] = "Could not update Dish!"
-        render("edit.slang")
+        flash["danger"] = "Could not create Dish!"
+        render("new.slang")
       end
-    else
-      flash["warning"] = "Dish with ID #{params["id"]} Not Found"
-      redirect_to "/dishes"
     end
   end
 
   def destroy
-    if dish = Dish.find params["id"]
-      dish.destroy
-    else
-      flash["warning"] = "Dish with ID #{params["id"]} Not Found"
+    with_meal do |meal|
+      if dish = Dish.find params["id"]
+        dish.destroy
+        meal.update_nutrition_facts
+      else
+        flash["warning"] = "Dish with ID #{params["id"]} Not Found"
+      end
+      redirect_to "/meals/#{meal.id}"
     end
-    redirect_to "/dishes"
   end
 
   def dish_params
     params.validation do
       required(:recipe_id) { |f| !f.nil? }
-      required(:meal_id) { |f| !f.nil? }
-      required(:nutrition_fact_id) { |f| !f.nil? }
+      required(:serving) { |f| !f.nil? }
     end
   end
+
 end
