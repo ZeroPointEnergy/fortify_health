@@ -9,6 +9,14 @@ class Recipe < Granite::Base
   field name : String
   timestamps
 
+  after_destroy :cleanup
+
+  def cleanup
+    ingrediants.each do |ingrediant|
+      ingrediant.destroy
+    end
+  end
+
   def nutrition_facts
     ingrediants.map{|i| i.nutrition_fact}
   end

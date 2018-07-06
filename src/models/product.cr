@@ -12,6 +12,14 @@ class Product < Granite::Base
   field amount : Int32
   timestamps
 
+  after_destroy :cleanup
+
+  def cleanup
+    if fact = nutrition_fact
+      fact.destroy
+    end
+  end
+
   def portion(amount : Int32, unit : String)
     if unit != self.unit
       raise "Unit convertion is not supported yet"

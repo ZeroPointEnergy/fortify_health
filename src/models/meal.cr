@@ -21,6 +21,16 @@ class Meal < Granite::Base
   field time : Time
   timestamps
 
+  after_destroy :cleanup
+
+  def cleanup
+    if fact = nutrition_fact
+      fact.destroy
+    end
+    dishes.each { |dish| dish.destroy }
+    side_dishes.each { |side_dish| side_dish.destroy }
+  end
+
   def update_nutrition_facts
     facts = dishes.map{|d| d.nutrition_fact}
     facts += side_dishes.map{|d| d.nutrition_fact}

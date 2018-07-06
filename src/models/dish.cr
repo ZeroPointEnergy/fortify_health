@@ -8,4 +8,12 @@ class Dish < Granite::Base
 
   # id : Int64 primary key is created for you
   timestamps
+
+  after_destroy :cleanup
+
+  def cleanup
+    if fact = nutrition_fact
+      fact.destroy
+    end
+  end
 end
