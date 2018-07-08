@@ -23,6 +23,24 @@ class Meal < Granite::Base
 
   after_destroy :cleanup
 
+  def date_input
+    (time || Time.now).to_s("%Y-%m-%d")
+  end
+
+  def time_input
+    (time || Time.now).to_s("%H:%M:%S")
+  end
+
+  def set_time(params : Hash)
+    time = params["time"]
+    date = params["date"]
+    if time && date
+      # TODO: implement timezone correctly
+      t = Time.parse("#{date} #{time} UTC", "%Y-%m-%d %H:%M:%S %z")
+      self.time = t.at_beginning_of_second
+    end
+  end
+
   def cleanup
     if fact = nutrition_fact
       fact.destroy

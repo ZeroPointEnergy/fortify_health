@@ -31,14 +31,12 @@ class MealController < ApplicationController
 
   def create
     if (user = current_user)
-      meal = Meal.new(meal_params.validate!)
+      meal = Meal.new
+      meal.set_time(meal_params.validate!)
       nutrition_fact = NutritionFact.new(calories: 0)
       if nutrition_fact.valid? && nutrition_fact.save
         meal.user_id = user.id
         meal.nutrition_fact_id = nutrition_fact.id
-
-        # FIXME: This is a horrible workaround
-        meal.time = Time.now.to_utc.at_beginning_of_second
 
         if meal.valid? && meal.save
           flash["success"] = "Created Meal successfully."
@@ -90,7 +88,8 @@ class MealController < ApplicationController
 
   def meal_params
     params.validation do
-      required(:time) { |f| !f.nil? }
+      required(:date, "Provide a date for the meal") { |f| !f.nil? }
+      required(:time, "Provide a time for the meal") { |f| !f.nil? }
     end
   end
 end
