@@ -10,8 +10,10 @@ a class="nav-item #{active}" href="/" Home
   a class="nav-item #{active}" href="/meals" Meals
   - active = context.request.path == "/recipes" ? "active" : ""
   a class="nav-item #{active}" href="/recipes" My Recipes
-  - active = context.request.path == "/products" ? "active" : ""
-  a class="nav-item #{active}" href="/products" Food Products
+  a class="nav-item dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" Products
+  div class="dropdown-menu" aria-labelledby="navbarDropdown"
+    a class="dropdown-item" href="/products" My Products
+    a class="dropdown-item" href="/product_sources" Product Sources
 - else
   - active = context.request.path == "/signup" ? "active" : ""
   a class="nav-item nav-item-auth nav-item-auth-signup #{active}" href="/signup"

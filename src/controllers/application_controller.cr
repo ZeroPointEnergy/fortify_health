@@ -1,4 +1,5 @@
 require "jasper_helpers"
+require "inflector"
 
 class ApplicationController < Amber::Controller::Base
   include JasperHelpers
@@ -18,4 +19,23 @@ class ApplicationController < Amber::Controller::Base
       redirect_to "/signin"
     end
   end
+
+  macro get_user
+    if user = context.current_user
+      user
+    else
+      flash[:info] = "Must be logged in"
+      return redirect_to "/signin"
+    end
+  end
+
+  macro resolve(id, model_class)
+    if result = {{model_class.id}}.find({{id}})
+      result
+    else
+      flash["danger"] = "Could not find #{Inflector.humanize({{model_class.id}})} with id #{ {{id}} }"
+      return redirect_to("/#{Inflector.pluralize(Inflector.underscore({{model_class.id}}.to_s))}")
+    end
+  end
+
 end

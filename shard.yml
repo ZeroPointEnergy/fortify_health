@@ -15,6 +15,9 @@ targets:
   amber:
     main: lib/amber/src/amber/cli.cr
 
+  fortify_health_cli:
+    main: src/fortify_health_cli.cr
+
 dependencies:
   amber:
     github: amberframework/amber

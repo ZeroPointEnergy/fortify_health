@@ -13,7 +13,25 @@ class User < Granite::Base
   has_many :recipes
   has_many :products
   has_many :meals
+  has_many :product_source_subscriptions
 
+  after_destroy :cleanup
+
+  def cleanup
+    recipes.each(&.destroy)
+    products.each(&.destroy)
+    meals.each(&.destroy)
+    product_source_subscriptions.each(&.destroy)
+  end
+
+  def product_sources_with_subscription_status
+    subscriptions = product_source_subscriptions.map(&.product_source_id)
+    res = {} of ProductSource => Bool
+    ProductSource.all.each do |product_source|
+      res[product_source] = subscriptions.includes?(product_source.id)
+    end
+    res
+  end
   validate :email, "is required", ->(user : User) do
     (email = user.email) ? !email.empty? : false
   end

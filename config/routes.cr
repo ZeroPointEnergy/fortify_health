@@ -35,6 +35,8 @@ Amber::Server.configure do
     resources "/meals", MealController
     resources "/meals/:meal_id/dishes", DishController, only: [:new, :create, :destroy]
     resources "/meals/:meal_id/side_dishes", SideDishController, only: [:new, :create, :destroy]
+    resources "/product_sources", ProductSourceController, only: [:index, :show]
+    resources "/product_sources/:product_sources_id/subscriptions", ProductSourceSubscriptionController, only: [:create, :destroy]
     get "/profile", UserController, :show
     get "/profile/edit", UserController, :edit
     patch "/profile", UserController, :update
