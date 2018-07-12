@@ -4,7 +4,7 @@ CREATE TABLE products (
   name VARCHAR,
   user_id BIGINT,
   unit VARCHAR,
-  amount INT,
+  amount FLOAT,
   nutrition_fact_id BIGINT,
   created_at TIMESTAMP,
   updated_at TIMESTAMP

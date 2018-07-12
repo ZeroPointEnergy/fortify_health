@@ -22,17 +22,24 @@ class FortifyHelpCli::Importer::SFCD < FortifyHelpCli::Importer::Base
     )
 
     data = CSV.parse(File.read(csv_file))
-    data[2..-1].each do |row|
-      new(
-        external_id: row[ID],
-        name: row[NAME],
-        amount: 100.to_i32,
-        unit: unit(row[AMOUNT]),
-        calories: row[CALORIES].to_i32,
-        protein: row[PROTEIN].to_i32,
-        carbohydrates: row[CARBOHYDRATES].to_i32,
-        fat: row[FAT].to_i32
-      ).import
+    data[3..-1].each do |row|
+      begin
+        next if row[ID].empty?
+        new(
+          external_id: row[ID],
+          name: row[NAME],
+          amount: 100.to_f,
+          unit: unit(row[AMOUNT]),
+          calories: row[CALORIES].to_f,
+          protein: row[PROTEIN].to_f,
+          carbohydrates: row[CARBOHYDRATES].to_f,
+          fat: row[FAT].to_f
+        ).import
+      rescue IndexError
+      rescue ex
+        puts "Error while parsing a row (#{ex.class}) : #{ex.message}"
+        puts row.inspect
+      end
     end
   end
 

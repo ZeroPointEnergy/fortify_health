@@ -10,10 +10,10 @@ class Ingrediant < Granite::Base
 
   # id : Int64 primary key is created for you
   field unit : String
-  field amount : Int32
+  field amount : Float64
   timestamps
 
   def nutrition_fact
-    product.portion(amount || 0, unit || "")
+    product.portion(amount || 0.0, unit || "")
   end
 end

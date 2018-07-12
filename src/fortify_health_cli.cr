@@ -29,7 +29,10 @@ class FortifyHealthCli < Cli::Supercommand
 end
 
 begin
-  FortifyHealthCli.run
-rescue
-  FortifyHealthCli.run(%w(--help))
+  FortifyHealthCli.run(ARGV)
+rescue ex
+  puts ex.class
+  puts ex.message
+  puts ex.backtrace.inspect
+  #FortifyHealthCli.run(%w(--help))
 end

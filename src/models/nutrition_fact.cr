@@ -3,10 +3,10 @@ class NutritionFact < Granite::Base
   table_name nutrition_facts
 
   # id : Int64 primary key is created for you
-  field calories : Int32
-  field fat : Int32
-  field carbohydrate : Int32
-  field protein : Int32
+  field calories : Float64
+  field fat : Float64
+  field carbohydrate : Float64
+  field protein : Float64
   timestamps
 
   def self.sum(nutrition_facts : Array(NutritionFact))
@@ -20,10 +20,10 @@ class NutritionFact < Granite::Base
 
   def *(factor : Float)
     NutritionFact.new(
-      calories: ((calories || 0)* factor).to_i,
-      fat: ((fat || 0) * factor).to_i,
-      carbohydrate: ((carbohydrate || 0) * factor).to_i,
-      protein: ((protein || 0) * factor).to_i,
+      calories: ((calories || 0)* factor),
+      fat: ((fat || 0) * factor),
+      carbohydrate: ((carbohydrate || 0) * factor),
+      protein: ((protein || 0) * factor),
     )
   end
 

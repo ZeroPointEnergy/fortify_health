@@ -27,13 +27,13 @@ class FortifyHelpCli::Importer::Base
   # product
   property external_id : String
   property name : String
-  property amount : Int32
+  property amount : Float64
   property unit : String
   # nutrition facts
-  property calories : Int32
-  property protein : Int32
-  property carbohydrates : Int32
-  property fat : Int32
+  property calories : Float64
+  property protein : Float64
+  property carbohydrates : Float64
+  property fat : Float64
 
   def initialize(
     @external_id,
@@ -56,7 +56,8 @@ class FortifyHelpCli::Importer::Base
       create_product(nutrition_fact)
     end
   rescue ex
-    puts "Error on import: #{ex.message}"
+    puts "Error on import [#{ex.class}]: #{ex.message}"
+    puts ex.backtrace
   end
 
   def get_product
@@ -70,8 +71,8 @@ class FortifyHelpCli::Importer::Base
       carbohydrate: @carbohydrates,
       protein: @protein,
     )
-    if nutrition_fact.valid? && nutrition_fact.save
-      raise "could not save nutrition fact"
+    unless nutrition_fact.valid? && nutrition_fact.save
+      raise "Could not update nutrition_fact: #{nutrition_fact.errors.inspect}"
     end
   end
 
@@ -82,7 +83,7 @@ class FortifyHelpCli::Importer::Base
       unit: @unit,
     )
     unless product.valid? && product.save
-      raise "could not save product"
+      raise "Could not update product: #{product.errors.inspect}"
     end
   end
 
@@ -96,7 +97,7 @@ class FortifyHelpCli::Importer::Base
     if nutrition_fact.valid? && nutrition_fact.save
       nutrition_fact
     else
-      raise "could not save nutrition fact"
+      raise "Could not create nutrition_fact: #{nutrition_fact.errors.inspect}"
     end
   end
 
@@ -110,7 +111,7 @@ class FortifyHelpCli::Importer::Base
       unit: @unit,
     )
     unless product.valid? && product.save
-      raise "could not save product"
+      raise "Could not create product: #{product.errors.inspect}"
     end
   end
 

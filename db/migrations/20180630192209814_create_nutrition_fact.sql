@@ -1,10 +1,10 @@
 -- +micrate Up
 CREATE TABLE nutrition_facts (
   id BIGSERIAL PRIMARY KEY,
-  calories INT,
-  fat INT,
-  carbohydrate INT,
-  protein INT,
+  calories FLOAT,
+  fat FLOAT,
+  carbohydrate FLOAT,
+  protein FLOAT,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );

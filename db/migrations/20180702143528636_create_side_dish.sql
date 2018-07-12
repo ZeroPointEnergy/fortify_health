@@ -4,7 +4,7 @@ CREATE TABLE side_dishes (
   product_id BIGINT,
   meal_id BIGINT,
   unit VARCHAR,
-  amount INT,
+  amount FLOAT,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );

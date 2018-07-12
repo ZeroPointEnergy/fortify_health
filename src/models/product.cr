@@ -9,8 +9,8 @@ class Product < Granite::Base
   # id : Int64 primary key is created for you
   field name : String
   field unit : String
-  field amount : Int32
-  field external_id : Int32
+  field amount : Float64
+  field external_id : String
   timestamps
 
   after_destroy :cleanup
@@ -21,11 +21,11 @@ class Product < Granite::Base
     end
   end
 
-  def portion(amount : Int32, unit : String)
+  def portion(amount : Float64, unit : String)
     if unit != self.unit
       raise "Unit convertion is not supported yet"
     else
-      nutrition_fact * (amount.to_f / (self.amount || 1).to_f)
+      nutrition_fact * (amount / (self.amount || 1.0))
     end
   end
 end

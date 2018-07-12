@@ -5,7 +5,7 @@ CREATE TABLE ingrediants (
   product_id BIGINT,
   user_id BIGINT,
   unit VARCHAR,
-  amount INT,
+  amount FLOAT,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );
