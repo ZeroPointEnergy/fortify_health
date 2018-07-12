@@ -1,7 +1,7 @@
 class ProductSourceSubscriptionController < ApplicationController
   def create
     user = get_user
-    product_source = resolve(params["product_source_id"], ProductSource)
+    product_source = resolve(subscription_params["product_source_id"], ProductSource)
     subscription = ProductSourceSubscription.new
     subscription.product_source = product_source
     subscription.user = user
@@ -15,9 +15,9 @@ class ProductSourceSubscriptionController < ApplicationController
 
   def destroy
     user = get_user
-    product_source = resolve(params["product_source_id"], ProductSource)
+    product_source = resolve(subscription_params["product_source_id"], ProductSource)
     if subscription = ProductSourceSubscription.find(params["id"])
-      if subscription.user == user
+      if subscription.user_id == user.id
         subscription.destroy
         flash["success"] = "Successfully unsubscribed from #{product_source.name}"
       else
@@ -29,4 +29,9 @@ class ProductSourceSubscriptionController < ApplicationController
     redirect_to "/product_sources"
   end
 
+  def subscription_params
+    params.validation do
+      required(:product_source_id) { |f| !f.nil? }
+    end
+  end
 end

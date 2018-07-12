@@ -24,11 +24,13 @@ class User < Granite::Base
     product_source_subscriptions.each(&.destroy)
   end
 
-  def product_sources_with_subscription_status
-    subscriptions = product_source_subscriptions.map(&.product_source_id)
-    res = {} of ProductSource => Bool
+  def product_sources_with_subscription
+    subscriptions = product_source_subscriptions
+    res = {} of ProductSource => ProductSourceSubscription?
     ProductSource.all.each do |product_source|
-      res[product_source] = subscriptions.includes?(product_source.id)
+      res[product_source] = subscriptions.find do |subscription|
+        subscription.product_source_id == product_source.id
+      end
     end
     res
   end
