@@ -28,4 +28,5 @@ class Product < Granite::Base
       nutrition_fact * (amount / (self.amount || 1.0))
     end
   end
+
 end

@@ -112,4 +112,5 @@ class ProductController < ApplicationController
       required(:protein) { |f| !f.nil? }
     end
   end
+
 end

@@ -21,6 +21,6 @@
             span
               == link_to("info", "/product_sources/#{product_source.id}", class: "btn btn-primary btn-sm")
               - if subscribed
-                == link_to("subscribe", "/product_sources/#{product_source.id}/subscribtion", class: "btn btn-success btn-sm")
-              - else
                 == link_to("unsubscribe", "/product_sources/#{ product_source.id }/subscription?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")
+              - else
+                == link_to("subscribe", "/product_sources/#{product_source.id}/subscribtion", class: "btn btn-success btn-sm")
