@@ -4,22 +4,17 @@ class MealController < ApplicationController
   end
 
   def index
-    if (user = current_user)
-      meals = user.meals
-      render("index.slang")
-    end
+    user = get_user
+    meals = user.meals
+    render("index.slang")
   end
 
   def show
-    if meal = Meal.find params["id"]
-      if nutrition_fact = meal.nutrition_fact
-        render("show.slang")
-      else
-        flash["warning"] = "Nutrition Facts for meal #{meal.time.to_s} Not Found"
-        redirect_to "/meals"
-      end
+    meal = resolve(params["id"], Meal)
+    if nutrition_fact = meal.nutrition_fact
+      render("show.slang")
     else
-      flash["warning"] = "Meal with ID #{params["id"]} Not Found"
+      flash["warning"] = "Nutrition Facts for meal #{meal.time.to_s} Not Found"
       redirect_to "/meals"
     end
   end
@@ -30,59 +25,48 @@ class MealController < ApplicationController
   end
 
   def create
-    if (user = current_user)
-      meal = Meal.new
-      meal.set_time(meal_params.validate!)
-      nutrition_fact = NutritionFact.new(calories: 0)
-      if nutrition_fact.valid? && nutrition_fact.save
-        meal.user_id = user.id
-        meal.nutrition_fact_id = nutrition_fact.id
+    user = get_user
+    meal = Meal.new
+    meal.set_time(meal_params.validate!)
+    nutrition_fact = NutritionFact.new(calories: 0.0)
 
-        if meal.valid? && meal.save
-          flash["success"] = "Created Meal successfully."
-          redirect_to "/meals"
-        else
-          flash["danger"] = "Could not create Meal!"
-          render("new.slang")
-        end
+    if nutrition_fact.valid? && nutrition_fact.save
+      meal.user_id = user.id
+      meal.nutrition_fact_id = nutrition_fact.id
+
+      if meal.valid? && meal.save
+        flash["success"] = "Created Meal successfully."
+        redirect_to "/meals"
       else
         flash["danger"] = "Could not create Meal!"
         render("new.slang")
       end
+    else
+      flash["danger"] = "Could not create Meal!"
+      render("new.slang")
     end
   end
 
   def edit
-    if meal = Meal.find params["id"]
-      render("edit.slang")
-    else
-      flash["warning"] = "Meal with ID #{params["id"]} Not Found"
-      redirect_to "/meals"
-    end
+    meal = resolve(params["id"], Meal)
+    render("edit.slang")
   end
 
   def update
-    if meal = Meal.find(params["id"])
-      meal.set_attributes(meal_params.validate!)
-      if meal.valid? && meal.save
-        flash["success"] = "Updated Meal successfully."
-        redirect_to "/meals"
-      else
-        flash["danger"] = "Could not update Meal!"
-        render("edit.slang")
-      end
-    else
-      flash["warning"] = "Meal with ID #{params["id"]} Not Found"
+    meal = resolve(params["id"], Meal)
+    meal.set_attributes(meal_params.validate!)
+    if meal.valid? && meal.save
+      flash["success"] = "Updated Meal successfully."
       redirect_to "/meals"
+    else
+      flash["danger"] = "Could not update Meal!"
+      render("edit.slang")
     end
   end
 
   def destroy
-    if meal = Meal.find params["id"]
-      meal.destroy
-    else
-      flash["warning"] = "Meal with ID #{params["id"]} Not Found"
-    end
+    meal = resolve(params["id"], Meal)
+    meal.destroy
     redirect_to "/meals"
   end
 
