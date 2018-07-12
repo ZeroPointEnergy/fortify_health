@@ -54,7 +54,7 @@ class MealController < ApplicationController
 
   def update
     meal = resolve(params["id"], Meal)
-    meal.set_attributes(meal_params.validate!)
+    meal.set_time(meal_params.validate!)
     if meal.valid? && meal.save
       flash["success"] = "Updated Meal successfully."
       redirect_to "/meals"

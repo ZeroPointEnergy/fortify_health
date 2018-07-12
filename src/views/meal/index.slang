@@ -17,6 +17,6 @@
           td = meal.nutrition_fact.calories
           td
             span
-              == link_to("read", "/meals/#{meal.id}", class: "btn btn-primary btn-sm")
-              == link_to("edit", "/meals/#{meal.id}/edit", class: "btn btn-success btn-sm")
+              == link_to("edit meal", "/meals/#{meal.id}", class: "btn btn-primary btn-sm")
+              == link_to("edit time", "/meals/#{meal.id}/edit", class: "btn btn-success btn-sm")
               == link_to("delete", "/meals/#{ meal.id }?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")

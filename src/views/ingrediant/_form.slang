@@ -7,7 +7,7 @@
   == csrf_tag
   .form-group
     == label(:product)
-    select name="product_id" selected="#{ingrediant.product_id}" class="form-control selectpicker" data-live-search="true"
+    select name="product_id" selected="#{ingrediant.product_id}" class="form-control selectpicker" data-live-search="true" title="Select a product..."
       - user.products_in_groups.each do |group, products|
         optgroup label="#{group}" data-max-options="2"
           - products.each do |product|
