@@ -1,5 +1,6 @@
 import Amber from 'amber'
 import 'bootstrap'
+import 'bootstrap-select'
 
 if (!Date.prototype.toGranite) {
   (function() {
