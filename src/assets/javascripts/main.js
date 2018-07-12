@@ -1,4 +1,5 @@
 import Amber from 'amber'
+import 'bootstrap'
 
 if (!Date.prototype.toGranite) {
   (function() {
