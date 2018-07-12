@@ -34,6 +34,19 @@ class User < Granite::Base
     end
     res
   end
+
+  def products_in_groups
+    res = {} of String => Array(Product)
+    res["My Products"] = products.to_a
+    product_source_subscriptions.each do |subscription|
+      product_source = subscription.product_source
+      if name = product_source.name
+        res[name] = product_source.products.to_a
+      end
+    end
+    res
+  end
+
   validate :email, "is required", ->(user : User) do
     (email = user.email) ? !email.empty? : false
   end

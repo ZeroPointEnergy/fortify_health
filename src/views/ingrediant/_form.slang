@@ -7,7 +7,11 @@
   == csrf_tag
   .form-group
     == label(:product)
-    == select_field(name: "product_id", collection: Product.all.map{|product| [product.id, product.name]}, selected: ingrediant.product_id, class: "form-control selectpicker", "data-live-search": "true")
+    select name="product_id" selected="#{ingrediant.product_id}" class="form-control selectpicker" data-live-search="true"
+      - user.products_in_groups.each do |group, products|
+        optgroup label="#{group}" data-max-options="2"
+          - products.each do |product|
+            option value="#{product.id}" #{product.name}
   .form-group
     == text_field(name: "unit", value: ingrediant.unit, placeholder: "Unit", class: "form-control")
   .form-group
