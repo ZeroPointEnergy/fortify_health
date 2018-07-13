@@ -47,6 +47,15 @@ class User < Granite::Base
     res
   end
 
+  def meals_by_days
+    res = {} of String => Array(Meal)
+    Meal.all("WHERE user_id = ? ORDER BY time DESC", id).each do |meal|
+      res[meal.date_input] ||= [] of Meal
+      res[meal.date_input] << meal
+    end
+    res
+  end
+
   validate :email, "is required", ->(user : User) do
     (email = user.email) ? !email.empty? : false
   end

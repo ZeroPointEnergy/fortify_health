@@ -5,7 +5,6 @@ class MealController < ApplicationController
 
   def index
     user = get_user
-    meals = user.meals
     render("index.slang")
   end
 
