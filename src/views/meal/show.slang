@@ -5,10 +5,10 @@ p
   == link_to("delete", "/meals/#{meal.id}?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")
 p
 h2 Nutrition Facts
-p = "Calories: #{meal.nutrition_fact.calories}"
-p = "Fat: #{meal.nutrition_fact.fat}"
-p = "Carbohydrate: #{meal.nutrition_fact.carbohydrate}"
-p = "Protein: #{meal.nutrition_fact.protein}"
+p = "Calories: #{"%.2f" % (meal.nutrition_fact.calories || 0.0)}"
+p = "Fat: #{"%.2f" % (meal.nutrition_fact.fat || 0.0)}"
+p = "Carbohydrate: #{"%.2f" % (meal.nutrition_fact.carbohydrate || 0.0)}"
+p = "Protein: #{"%.2f" % (meal.nutrition_fact.protein || 0.0)}"
 .row
   .col-sm-11
     h2 Dishes
@@ -25,7 +25,7 @@ p = "Protein: #{meal.nutrition_fact.protein}"
       - meal.dishes.each do |dish|
         tr
           td = dish.recipe.name
-          td = dish.nutrition_fact.calories
+          td = "%.2f" % (dish.nutrition_fact.calories || 0.0)
           td
             span
               == link_to("delete", "/meals/#{meal.id}/dishes/#{ dish.id }?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")

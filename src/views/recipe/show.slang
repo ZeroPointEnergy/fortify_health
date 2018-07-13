@@ -5,10 +5,10 @@ p
   == link_to("delete", "/recipes/#{recipe.id}?_csrf=#{csrf_token}", "data-method": "delete", "data-confirm": "Are you sure?", class: "btn btn-danger btn-sm")
 p
 h2 Nutrition Facts
-p = "Calories: #{recipe.nutrition_fact.calories}"
-p = "Fat: #{recipe.nutrition_fact.fat}"
-p = "Carbohydrate: #{recipe.nutrition_fact.carbohydrate}"
-p = "Protein: #{recipe.nutrition_fact.protein}"
+p = "Calories: #{"%.2f" % (recipe.nutrition_fact.calories || 0.0)}"
+p = "Fat: #{"%.2f" % (recipe.nutrition_fact.fat || 0.0)}"
+p = "Carbohydrate: #{"%.2f" % (recipe.nutrition_fact.carbohydrate || 0.0)}"
+p = "Protein: #{"%.2f" % (recipe.nutrition_fact.protein || 0.0)}"
 .row
   .col-sm-11
     h2 Ingrediants

@@ -16,7 +16,7 @@
         - meals.each do |meal|
           tr
             td = meal.time
-            td = meal.nutrition_fact.calories
+            td = "%.2f" % (meal.nutrition_fact.calories || 0.0)
             td
               span
                 == link_to("edit meal", "/meals/#{meal.id}", class: "btn btn-primary btn-sm")

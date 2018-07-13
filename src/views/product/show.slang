@@ -1,9 +1,9 @@
 h1 = product.name
 p = "Nutrition facts for #{product.amount}#{product.unit}"
-p = "Calories: #{nutrition_fact.calories}"
-p = "Fat: #{nutrition_fact.fat}"
-p = "Carbohydrate: #{nutrition_fact.carbohydrate}"
-p = "Protein: #{nutrition_fact.protein}"
+p = "Calories: #{"%.2f" % (nutrition_fact.calories || 0.0)}"
+p = "Fat: #{"%.2f" % (nutrition_fact.fat || 0.0)}"
+p = "Carbohydrate: #{"%.2f" % (nutrition_fact.carbohydrate || 0.0)}"
+p = "Protein: #{"%.2f" % (nutrition_fact.protein || 0.0)}"
 p
   - if product.product_source_id
     == link_to("back", "/product_sources/#{product.product_source.id}", class: "btn btn-light btn-sm")
