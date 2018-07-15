@@ -62,7 +62,7 @@ class User < Granite::Base
 
   validate :email, "already in use", ->(user : User) do
     existing = User.find_by email: user.email
-    !existing
+    existing ? (user.id == existing.id) : false
   end
 
   validate :password, "is too short", ->(user : User) do
