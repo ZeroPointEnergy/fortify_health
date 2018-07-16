@@ -22,7 +22,7 @@ class SideDishController < ApplicationController
   def create
     user = get_user
     meal = resolve(params["meal_id"], Meal)
-    side_dish = SideDish.new(side_dish_params.validate!)
+    side_dish = SideDish.new(create_params.validate!)
     side_dish.meal_id = meal.id
 
     if side_dish.valid? && side_dish.save
@@ -50,7 +50,7 @@ class SideDishController < ApplicationController
     user = get_user
     meal = resolve(params["meal_id"], Meal)
     if side_dish = SideDish.find(params["id"])
-      side_dish.set_attributes(side_dish_params.validate!)
+      side_dish.set_attributes(update_params.validate!)
       if side_dish.valid? && side_dish.save
         flash["success"] = "Updated SideDish successfully."
         meal.update_nutrition_facts
@@ -76,9 +76,16 @@ class SideDishController < ApplicationController
     redirect_to "/meals/#{meal.id}"
   end
 
-  def side_dish_params
+  def create_params
     params.validation do
       required(:product_id) { |f| !f.nil? }
+      required(:unit) { |f| !f.nil? }
+      required(:amount) { |f| !f.nil? }
+    end
+  end
+
+  def update_params
+    params.validation do
       required(:unit) { |f| !f.nil? }
       required(:amount) { |f| !f.nil? }
     end

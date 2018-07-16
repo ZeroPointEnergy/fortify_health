@@ -13,7 +13,7 @@ class IngrediantController < ApplicationController
   def create
     user = get_user
     recipe = resolve(params["recipe_id"], Recipe)
-    ingrediant = Ingrediant.new(ingrediant_params.validate!)
+    ingrediant = Ingrediant.new(create_params.validate!)
     ingrediant.recipe_id = recipe.id
     ingrediant.user_id = user.id
 
@@ -41,7 +41,7 @@ class IngrediantController < ApplicationController
     user = get_user
     recipe = resolve(params["recipe_id"], Recipe)
     if ingrediant = Ingrediant.find(params["id"])
-      ingrediant.set_attributes(ingrediant_params.validate!)
+      ingrediant.set_attributes(update_params.validate!)
       if ingrediant.valid? && ingrediant.save
         flash["success"] = "Updated Ingrediant successfully."
         redirect_to "/recipes/#{recipe.id}"
@@ -65,7 +65,7 @@ class IngrediantController < ApplicationController
     redirect_to "/recipes/#{recipe.id}"
   end
 
-  def ingrediant_params
+  def create_params
     params.validation do
       required(:product_id) { |f| !f.nil? }
       required(:unit) { |f| !f.nil? }
@@ -73,4 +73,10 @@ class IngrediantController < ApplicationController
     end
   end
 
+  def update_params
+    params.validation do
+      required(:unit) { |f| !f.nil? }
+      required(:amount) { |f| !f.nil? }
+    end
+  end
 end
