@@ -49,21 +49,40 @@ class User < Granite::Base
     res
   end
 
-  def meals_by_days
-    res = {} of String => Array(Meal)
-    Meal.all("WHERE user_id = ? ORDER BY time DESC", id).each do |meal|
-      res[meal.date_string] ||= [] of Meal
-      res[meal.date_string] << meal
-    end
-    res
-  end
-
   def location
     Time::Location.load(timezone || "UTC")
   end
 
   def time_now
     Time.now(location)
+  end
+
+  def date_format
+    "%Y-%m-%d"
+  end
+
+  def time_format
+    twenty_four_hour_clock ? "%H:%M:%S" : "%I:%M:%S %p"
+  end
+
+  def format_date(time : Time?)
+    if time
+      time.in(location).to_s(date_format)
+    else
+      time_now.to_s(date_format)
+    end
+  end
+
+  def format_time(time : Time?)
+    if time
+      time.in(location).to_s(time_format)
+    else
+      time_now.to_s(time_format)
+    end
+  end
+
+  def parse_time(date : String, time : String)
+    Time.parse("#{date} #{time}", "#{date_format} #{time_format}", location: location)
   end
 
   validate :email, "is required", ->(user : User) do

@@ -1,4 +1,4 @@
-h1 = "Meal for #{meal.date_string} #{meal.time_string}"
+h1 = "Meal for #{user.format_date(meal.time)} #{user.format_time(meal.time)}"
 p
   == link_to("back", "/meals", class: "btn btn-light btn-sm")
   == link_to("edit time", "/meals/#{meal.id}/edit", class: "btn btn-success btn-sm")

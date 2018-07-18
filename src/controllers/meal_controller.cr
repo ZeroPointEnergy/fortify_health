@@ -5,10 +5,12 @@ class MealController < ApplicationController
 
   def index
     user = get_user
+    meals_by_days = Meal.by_days(user)
     render("index.slang")
   end
 
   def show
+    user = get_user
     meal = resolve(params["id"], Meal)
     if nutrition_fact = meal.nutrition_fact
       render("show.slang")
@@ -49,11 +51,13 @@ class MealController < ApplicationController
   end
 
   def edit
+    user = get_user
     meal = resolve(params["id"], Meal)
     render("edit.slang")
   end
 
   def update
+    user = get_user
     meal = resolve(params["id"], Meal)
     meal.set_time(meal_params.validate!)
     if meal.valid? && meal.save

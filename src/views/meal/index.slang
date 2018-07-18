@@ -3,7 +3,7 @@
     h2 Meals
   .col-sm-1
     a.btn.btn-success.btn-sm href="/meals/new" New
-- user.meals_by_days.each do |day, meals|
+- meals_by_days.each do |day, meals|
   h3 == day
   .table-responsive
     table.table.table-striped
@@ -15,7 +15,7 @@
       tbody
         - meals.each do |meal|
           tr
-            td = meal.time_string
+            td = user.format_time(meal.time)
             td = "%.2f" % (meal.nutrition_fact.calories || 0.0)
             td
               span

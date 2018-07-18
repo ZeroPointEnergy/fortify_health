@@ -23,29 +23,26 @@ class Meal < Granite::Base
 
   after_destroy :cleanup
 
-  def user_time
-    if t = time
-      t.in(user.location)
-    else
-      user.time_now
-    end
-  end
-
-  def date_string
-    user_time.to_s("%Y-%m-%d")
-  end
-
-  def time_string
-    user_time.to_s("%H:%M:%S")
-  end
-
   def set_time(params : Hash)
     time = params["time"]
     date = params["date"]
     if time && date
-      t = Time.parse("#{date} #{time}", "%Y-%m-%d %H:%M:%S", location: user.location)
-      self.time = t.to_utc.at_beginning_of_second
+      self.time = user.parse_time(date, time).to_utc.at_beginning_of_second
     end
+  end
+
+  def self.by_days(user : User, days : Int32 = 0)
+    res = {} of String => Array(Meal)
+    all("WHERE user_id = ? ORDER BY time DESC", user.id).each do |meal|
+      if time = meal.time
+        date = user.format_date(time)
+        res[date] ||= [] of Meal
+        res[date] << meal
+      else
+        Amber.logger.error("Meal with id #{meal.id} does not have a valid time. Ignoring")
+      end
+    end
+    res
   end
 
   def cleanup
