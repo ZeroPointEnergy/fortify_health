@@ -23,21 +23,28 @@ class Meal < Granite::Base
 
   after_destroy :cleanup
 
-  def date_input
-    (time || Time.now).to_s("%Y-%m-%d")
+  def user_time
+    if t = time
+      t.in(user.location)
+    else
+      user.time_now
+    end
   end
 
-  def time_input
-    (time || Time.now).to_s("%H:%M:%S")
+  def date_string
+    user_time.to_s("%Y-%m-%d")
+  end
+
+  def time_string
+    user_time.to_s("%H:%M:%S")
   end
 
   def set_time(params : Hash)
     time = params["time"]
     date = params["date"]
     if time && date
-      # TODO: implement timezone correctly
-      t = Time.parse("#{date} #{time} UTC", "%Y-%m-%d %H:%M:%S %z")
-      self.time = t.at_beginning_of_second
+      t = Time.parse("#{date} #{time}", "%Y-%m-%d %H:%M:%S", location: user.location)
+      self.time = t.to_utc.at_beginning_of_second
     end
   end
 

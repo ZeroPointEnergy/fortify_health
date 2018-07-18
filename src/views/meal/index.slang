@@ -15,7 +15,7 @@
       tbody
         - meals.each do |meal|
           tr
-            td = meal.time
+            td = meal.time_string
             td = "%.2f" % (meal.nutrition_fact.calories || 0.0)
             td
               span

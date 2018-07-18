@@ -19,18 +19,20 @@ class MealController < ApplicationController
   end
 
   def new
-    meal = Meal.new(time: Time.utc_now)
+    user = get_user
+    meal = Meal.new
+    meal.user = user
     render("new.slang")
   end
 
   def create
     user = get_user
     meal = Meal.new
+    meal.user = user
     meal.set_time(meal_params.validate!)
     nutrition_fact = NutritionFact.new(calories: 0.0)
 
     if nutrition_fact.valid? && nutrition_fact.save
-      meal.user_id = user.id
       meal.nutrition_fact_id = nutrition_fact.id
 
       if meal.valid? && meal.save

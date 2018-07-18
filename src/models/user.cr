@@ -8,6 +8,8 @@ class User < Granite::Base
   field name : String
   field email : String
   field hashed_password : String
+  field timezone : String
+  field twenty_four_hour_clock : Bool
   timestamps
 
   has_many :recipes
@@ -50,10 +52,18 @@ class User < Granite::Base
   def meals_by_days
     res = {} of String => Array(Meal)
     Meal.all("WHERE user_id = ? ORDER BY time DESC", id).each do |meal|
-      res[meal.date_input] ||= [] of Meal
-      res[meal.date_input] << meal
+      res[meal.date_string] ||= [] of Meal
+      res[meal.date_string] << meal
     end
     res
+  end
+
+  def location
+    Time::Location.load(timezone || "UTC")
+  end
+
+  def time_now
+    Time.now(location)
   end
 
   validate :email, "is required", ->(user : User) do

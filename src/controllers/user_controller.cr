@@ -36,6 +36,8 @@ class UserController < ApplicationController
       required(:email) { |f| !f.nil? && !f.empty? }
       required(:name) { |f| !f.nil? && !f.empty? }
       optional(:password) { |f| !f.nil? && !f.empty? }
+      optional(:twenty_four_hour_clock) { |f| !f.nil? }
+      optional(:timezone) { |f| !f.nil? }
     end
   end
 end
