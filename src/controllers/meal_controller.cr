@@ -39,7 +39,7 @@ class MealController < ApplicationController
 
       if meal.valid? && meal.save
         flash["success"] = "Created Meal successfully."
-        redirect_to "/meals"
+        redirect_to "/meals/#{meal.id}"
       else
         flash["danger"] = "Could not create Meal!"
         render("new.slang")
