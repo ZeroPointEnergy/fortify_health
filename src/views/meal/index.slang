@@ -3,8 +3,13 @@
     h2 Meals
   .col-sm-1
     a.btn.btn-success.btn-sm href="/meals/new" New
-- meals_by_days.each do |day, meals|
-  h3 == day
+- days.each do |_, day|
+  h3 == day.date
+  h4 Nutrition Facts
+  p = "Calories: #{"%.2f" % (day.nutrition_fact.calories || 0.0)}"
+  p = "Fat: #{"%.2f" % (day.nutrition_fact.fat || 0.0)}"
+  p = "Carbohydrate: #{"%.2f" % (day.nutrition_fact.carbohydrate || 0.0)}"
+  p = "Protein: #{"%.2f" % (day.nutrition_fact.protein || 0.0)}"
   .table-responsive
     table.table.table-striped
       thead
@@ -13,7 +18,7 @@
           th Calories
           th Actions
       tbody
-        - meals.each do |meal|
+        - day.meals.each do |meal|
           tr
             td = user.format_time(meal.time)
             td = "%.2f" % (meal.nutrition_fact.calories || 0.0)

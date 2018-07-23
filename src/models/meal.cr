@@ -31,13 +31,13 @@ class Meal < Granite::Base
     end
   end
 
-  def self.by_days(user : User, days : Int32 = 0)
-    res = {} of String => Array(Meal)
+  def self.days(user : User, days : Int32 = 0)
+    res = {} of String => Day
     all("WHERE user_id = ? ORDER BY time DESC", user.id).each do |meal|
       if time = meal.time
         date = user.format_date(time)
-        res[date] ||= [] of Meal
-        res[date] << meal
+        res[date] ||= Day.new(date: date, user: user)
+        res[date].meals << meal
       else
         Amber.logger.error("Meal with id #{meal.id} does not have a valid time. Ignoring")
       end
