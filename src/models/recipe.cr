@@ -2,8 +2,8 @@ class Recipe < Granite::Base
   adapter pg
   table_name recipes
 
-  belongs_to :user
-  has_many :ingrediants
+  belongs_to :user, class_name: User
+  has_many :ingrediants, class_name: Ingrediant
 
   # id : Int64 primary key is created for you
   field name : String

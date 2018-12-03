@@ -2,9 +2,9 @@ class Product < Granite::Base
   adapter pg
   table_name products
 
-  belongs_to :user
-  belongs_to :product_source
-  belongs_to :nutrition_fact
+  belongs_to :user, class_name: User
+  belongs_to :product_source, class_name: ProductSource
+  belongs_to :nutrition_fact, class_name: NutritionFact
 
   # id : Int64 primary key is created for you
   field name : String

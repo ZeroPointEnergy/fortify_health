@@ -4,6 +4,8 @@ require "crypto/bcrypt/password"
 class User < Granite::Base
   include Crypto
   adapter pg
+  table_name users
+
   primary id : Int64
   field name : String
   field email : String
@@ -12,10 +14,10 @@ class User < Granite::Base
   field twenty_four_hour_clock : Bool
   timestamps
 
-  has_many :recipes
-  has_many :products
-  has_many :meals
-  has_many :product_source_subscriptions
+  has_many :recipes, class_name: Recipe
+  has_many :products, class_name: Product
+  has_many :meals, class_name: Meal
+  has_many :product_source_subscriptions, class_name: ProductSourceSubscription
 
   after_destroy :cleanup
 

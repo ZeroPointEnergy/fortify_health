@@ -8,7 +8,7 @@ class ProductSource < Granite::Base
   field notes : String
   timestamps
 
-  has_many :products
+  has_many :products, class_name: Product
 
   after_destroy :cleanup
 

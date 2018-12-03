@@ -4,7 +4,7 @@ version: 0.1.0
 authors:
   - Andreas Zuber <zuber@puzzle.ch>
 
-crystal: 0.25.0
+crystal: 0.27.0
 
 license: UNLICENSED
 
@@ -21,20 +21,20 @@ targets:
 dependencies:
   amber:
     github: amberframework/amber
-    version: 0.9.0
+    version: 0.11.1
     #branch: master
 
   granite:
     github: amberframework/granite
-    version: ~> 0.13.0
+    version: ~> 0.15.0
 
   quartz_mailer:
     github: amberframework/quartz-mailer
-    version: ~> 0.5.1
+    version: ~> 0.5.2
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: ~> 0.2.0
+    version: ~> 0.2.1
 
   pg:
     github: will/crystal-pg

@@ -2,8 +2,8 @@ class SideDish < Granite::Base
   adapter pg
   table_name side_dishes
 
-  belongs_to :product
-  belongs_to :meal
+  belongs_to :product, class_name: Product
+  belongs_to :meal, class_name: Meal
 
   # id : Int64 primary key is created for you
   field unit : String

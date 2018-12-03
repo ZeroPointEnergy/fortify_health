@@ -2,20 +2,10 @@ class Meal < Granite::Base
   adapter pg
   table_name meals
 
-  belongs_to :user
-  belongs_to :nutrition_fact
-
-  #has_many :dishes
-  # FIXME: Granite lacks an inflector
-  def dishes
-    Granite::AssociationCollection(self, Dish).new(self)
-  end
-
-  #has_many :side_dishes
-  # FIXME: Granite lacks an inflector
-  def side_dishes
-    Granite::AssociationCollection(self, SideDish).new(self)
-  end
+  belongs_to :user, class_name: User
+  belongs_to :nutrition_fact, class_name: NutritionFact
+  has_many :dishes, class_name: Dish
+  has_many :side_dishes, class_name: SideDish
 
   # id : Int64 primary key is created for you
   field time : Time

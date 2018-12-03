@@ -2,9 +2,9 @@ class Dish < Granite::Base
   adapter pg
   table_name dishes
 
-  belongs_to :recipe
-  belongs_to :meal
-  belongs_to :nutrition_fact
+  belongs_to :recipe, class_name: Recipe
+  belongs_to :meal, class_name: Meal
+  belongs_to :nutrition_fact, class_name: NutritionFact
 
   # id : Int64 primary key is created for you
   timestamps
