@@ -2,11 +2,11 @@ version: 1.0
 shards:
   amber:
     github: amberframework/amber
-    version: 0.11.1
+    version: 0.11.3
 
   amber_router:
     github: amberframework/amber-router
-    version: 0.2.0
+    version: 0.2.1
 
   callback:
     github: mosop/callback
@@ -32,13 +32,17 @@ shards:
     github: arcage/crystal-email
     version: 0.3.2
 
+  exception_page:
+    github: crystal-loot/exception_page
+    version: 0.1.1
+
   garnet_spec:
     github: amberframework/garnet-spec
     version: 0.2.1
 
   granite:
     github: amberframework/granite
-    version: 0.15.0
+    version: 0.15.2
 
   i18n:
     github: TechMagister/i18n.cr
@@ -50,7 +54,7 @@ shards:
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: 0.2.1
+    version: 0.2.4
 
   kilt:
     github: jeromegn/kilt
@@ -82,7 +86,7 @@ shards:
 
   quartz_mailer:
     github: amberframework/quartz-mailer
-    version: 0.5.2
+    version: 0.5.3
 
   redis:
     github: stefanwille/crystal-redis

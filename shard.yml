@@ -21,20 +21,20 @@ targets:
 dependencies:
   amber:
     github: amberframework/amber
-    version: 0.11.1
+    version: 0.11.3
     #branch: master
 
   granite:
     github: amberframework/granite
-    version: ~> 0.15.0
+    version: ~> 0.15.2
 
   quartz_mailer:
     github: amberframework/quartz-mailer
-    version: ~> 0.5.2
+    version: ~> 0.5.3
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: ~> 0.2.1
+    version: ~> 0.2.4
 
   pg:
     github: will/crystal-pg
